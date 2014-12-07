@@ -31,10 +31,9 @@ $(document).ready(function(){
                     latestVLoc.latitude,
                     latestVLoc.longitude
                 );
-
                 marker.setPosition(cLoc);
                 marker.setMap(map);
-
+                map.panTo(cLoc);
                 window.setTimeout(getMarkers, INTERVAL);
             },
             error: function(xhr, errmsg,err){
