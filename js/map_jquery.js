@@ -17,40 +17,21 @@ $(document).ready(function(){
 
     getMarkers();
 
-    var gblRandom = 0;
-
     function getMarkers(){
-
-        //var cPos = marker.getPosition();
-        ////console.log('lat'+cPos.lat()+',lnt'+cPos.lng());
-        //var cll = new google.maps.LatLng(cPos.lat()+0.01, cPos.lng  ());
-        //marker.setPosition(cll);
-        //marker.setMap(map);
-
         $.ajax({
-            url: 'http://localhost:8000/api/drive_historys/',
+            url: 'http://localhost:8000/api/drive_historys/1/',
             type: 'GET',
             dataType: 'json',
             contentType: "application/json",
             success: function(json){
-                var loc_array = json;
-                var i = Math.floor(Math.random() * loc_array.length) + 1;
-                if (i==gblRandom){
-                    window.setTimeout(getMarkers, INTERVAL);
-                    return;
-                }else{
-                    gblRandom = i;
-                }
-
-                var actual_i = i-1;
-                var pLoc = marker.getPosition();
-                console.log('pLat'+pLoc.lat()+',pLng'+pLoc.lng());
+                // Expect array with one element.
+                var latestVLoc = json;
+                console.log(latestVLoc);
                 var cLoc = new google.maps.LatLng(
-                    loc_array[actual_i].latitude,
-                    loc_array[actual_i].longitude
-                )
-                console.log(
-                    'cLat'+loc_array[actual_i].latitude+',cLng'+loc_array[actual_i].longitude);
+                    latestVLoc.latitude,
+                    latestVLoc.longitude
+                );
+
                 marker.setPosition(cLoc);
                 marker.setMap(map);
 
